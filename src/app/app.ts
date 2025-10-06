@@ -1,10 +1,11 @@
-import { Component, Signal } from '@angular/core';
+import { Component, inject, Inject, OnInit, signal, Signal } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Post } from './post.model';
 import { environment } from '../environments/environment';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { distinctUntilKeyChanged } from 'rxjs';
+import { distinctUntilKeyChanged, Observable } from 'rxjs';
+import { Posts } from './post';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +13,19 @@ import { distinctUntilKeyChanged } from 'rxjs';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  posts!: Signal<Post[]>;
+export class App implements OnInit{
 
+  postData!: Observable<Post[]>;
 
-  constructor(private http: HttpClient) {
-    this.posts = this.fetchPostsWithConfig();
+  private postService = inject(Posts);
+
+  ngOnInit() {
+    // this.getAllPosts();
+    this.postData = this.postService.getPosts();
   }
 
-  private fetchPostsWithConfig() {
-    return toSignal(this.http.get<Post[]>(environment.apiUrl + '/posts'), { initialValue: [] });
+  getAllPosts() {
+
   }
 
 }
