@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
@@ -14,7 +14,14 @@ export class Posts {
   private env = environment;
 
   getPosts():Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.env.apiUrl}/posts`);
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      'X-Custom-Header': 'myValue'
+    });
+
+    const params = new HttpParams().set('userId', 1);
+
+    return this.http.get<Post[]>(`${this.env.apiUrl}/posts`, {headers: headers, params: params});
   }
 
 }

@@ -15,13 +15,17 @@ import { Posts } from './post';
 })
 export class App implements OnInit{
 
-  postData!: Observable<Post[]>;
+  postData!: Signal<Post[]>;
 
   private postService = inject(Posts);
 
+  constructor() {
+    this.postData = toSignal(this.postService.getPosts(), {initialValue: []});
+  }
+
   ngOnInit() {
     // this.getAllPosts();
-    this.postData = this.postService.getPosts();
+
   }
 
   getAllPosts() {

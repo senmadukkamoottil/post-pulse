@@ -4,7 +4,7 @@
 </header>
 <div class="container mx-auto p-6 card-container">
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let post of postData | async" class="bg-white shadow-lg rounded-lg p-6 post-card">
+    <div *ngFor="let post of postData()" class="bg-white shadow-lg rounded-lg p-6 post-card">
       <h2 class="post-title text-xl font-semibold">{{ post.title }}</h2>
       <p class="post-body mt-2 text-gray-600">{{ post.body }}</p>
     </div>
